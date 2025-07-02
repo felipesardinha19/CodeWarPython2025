@@ -16,7 +16,7 @@ O projeto faz parte do **Code War Python 2025**, seguindo boas práticas de prog
 - 🐍 Python 3.x  
 - ⚡ FastAPI  
 - 🗄️ SQLite  
-- 🔗 SQLAlchemy  
+- 🔗 SQLModel  
 - 📡 httpx  
 - 🔧 Pydantic  
 - 🚀 Uvicorn  
