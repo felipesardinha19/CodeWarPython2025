@@ -1,16 +1,29 @@
 from fastapi import FastAPI
-from app.routes import receitas
+from sqlmodel import SQLModel
 
-# Cria a instância da aplicação FastAPI com título
-app = FastAPI(title= "CodeWar - API de Receitas")
+from app.database.conexao import engine
+from app.routes.receita import router as receita_router
 
-# Inclui a rota de receitas, agrupando os endpoints sob /receitas
-app.include_router(receitas.router)
+# Cria a aplicação FastAPI
+app = FastAPI(title="CodeWar - API de Receitas")
+
+# Registra as rotas da API
+app.include_router(receita_router)
+
+
+@app.on_event("startup")
+def on_startup():
+    """
+    Evento executado quando a aplicação inicia.
+    Cria as tabelas no banco, caso não existam.
+    """
+    SQLModel.metadata.create_all(engine)
+
 
 @app.get("/")
-def read_root():
+def root():
     """
     Endpoint raiz da API.
-    Retorna uma mensagem simples de boas-vindas.
+    Retorna uma mensagem de boas-vindas.
     """
     return {"mensagem": "Bem-vindo à API de Receitas!"}
