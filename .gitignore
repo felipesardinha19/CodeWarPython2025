@@ -1,0 +1,13 @@
+# Ambientes virtuais
+venv/
+
+# Banco de dados SQLite
+receitas.db
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

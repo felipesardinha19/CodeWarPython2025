@@ -23,11 +23,11 @@ def get_session():
 # Endpoint para importar receitas da API pública (TheMealDB)
 # ---------------------------
 @router.post("/importar")
-async def importar_receitas(session: Session = Depends(get_session)): 
+def importar_receitas(session: Session = Depends(get_session)): 
     url = "https://www.themealdb.com/api/json/v1/1/search.php?s="
     # Abre uma sessão HTTP assíncrona para realizar a requisição
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url)
+    with httpx.Client() as client:
+        response = client.get(url)
         # Converte a resposta para JSON
         data = response.json()
     
