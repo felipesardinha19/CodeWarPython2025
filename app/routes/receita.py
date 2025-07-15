@@ -1,4 +1,5 @@
 import httpx
+from app.schemas.receita import ReceitaCreate, ReceitaRead
 from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session
 from typing import List
@@ -53,15 +54,24 @@ def buscar_receita(id: int, session: Session = Depends(get_session)):
 # ---------------------------
 # CRUD: Criar uma nova receita manualmente
 # ---------------------------
-@router.post("/", response_model=Receita)
-def criar_receita(receita: Receita, session: Session = Depends(get_session)):
+@router.post("/", response_model=ReceitaRead)
+def criar_receita(receita: ReceitaCreate, session: Session = Depends(get_session)):
     """
     Cadastra uma nova receita manualmente.
     """
+    nova_receita = Receita(
+        Nome = receita.Nome,
+        Descricao = receita.Descricao,
+        Ingredientes = receita.Ingredientes,
+        TempoPreparo = receita.TempoPreparo,
+        Categoria = receita.Categoria,
+        Origem = receita.Origem
+    )
+
     session.add(receita)
     session.commit()
-    session.refresh(receita)
-    return receita
+    session.refresh(nova_receita)
+    return nova_receita
 
 # ---------------------------
 # CRUD: Atualizar uma receita existente
