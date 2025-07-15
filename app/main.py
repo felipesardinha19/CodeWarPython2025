@@ -5,7 +5,9 @@ from app.database.conexao import engine
 from app.routes.receita import router as receita_router
 
 # Cria a aplicação FastAPI
-app = FastAPI(title="CodeWar - API de Receitas")
+app = FastAPI(title="Cadê Meu Prato?",
+              description="API para cadastrar e consultar receitas culinárias",
+              version="1.0.0")
 
 # Registra as rotas da API
 app.include_router(receita_router)
