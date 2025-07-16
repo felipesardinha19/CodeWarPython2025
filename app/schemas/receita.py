@@ -9,6 +9,7 @@ class ReceitaBase(BaseModel):
     TempoPreparo: Optional[int] = None
     Categoria: Optional[str] = None
     Origem: Optional[str] = None
+    ImagemURL: Optional[str] = None
 
 class ReceitaCreate(ReceitaBase):
     pass

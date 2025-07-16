@@ -1,7 +1,7 @@
 import httpx
 from app.schemas.receita import ReceitaCreate, ReceitaRead
 from fastapi import APIRouter, HTTPException, Depends
-from sqlmodel import Session
+from sqlmodel import Session, select
 from typing import List
 from datetime import datetime
 
@@ -68,7 +68,7 @@ def criar_receita(receita: ReceitaCreate, session: Session = Depends(get_session
         Origem = receita.Origem
     )
 
-    session.add(receita)
+    session.add(nova_receita)
     session.commit()
     session.refresh(nova_receita)
     return nova_receita
