@@ -4,8 +4,8 @@
 
 ## 📖 Descrição
 
-**CadeMeuPrato** é uma API construída com **FastAPI** para gerenciar receitas culinárias com um toque especial.  
-Além de receitas básicas, ela oferece funcionalidades **nutricionais** (como calorias, proteínas e gorduras), e integração com **APIs públicas** para enriquecer os dados.
+**CadeMeuPrato** é uma API construída com **FastAPI** para gerenciar receitas culinárias com um toque especial.
+ela oferece integração com **API pública** para enriquecer os dados.
 
 O projeto faz parte do **Code War Python 2025**, seguindo boas práticas de programação, organização, documentação e testes.
 
@@ -25,8 +25,7 @@ O projeto faz parte do **Code War Python 2025**, seguindo boas práticas de prog
 
 ## ✨ Funcionalidades Principais
 
-- 📋 CRUD completo para receitas (criar, listar, atualizar, deletar)  
-- 🍏 Informações nutricionais (calorias, proteínas, carboidratos, gorduras)  
+- 📋 CRUD completo para receitas (criar, listar, atualizar, deletar)    
 - 🌐 Integração com APIs públicas (ex: TheMealDB)  
 - 🔍 Filtros por categoria, calorias e ingredientes  
 - 🧪 Preparada para testes automatizados  
@@ -39,18 +38,33 @@ O projeto faz parte do **Code War Python 2025**, seguindo boas práticas de prog
 
 ```text
 CadeMeuPrato/
+/CodeWarPython2025
 │
-├── app/
-│ ├── routes/ # Endpoints organizados por módulo
-│ ├── models.py # Modelo ORM da tabela Receita
-│ ├── database.py # Configuração do SQLite
-│ └── main.py # Inicialização da API
+├── app/                          # Código principal da aplicação
+│   ├── __init__.py               # Torna 'app' um pacote Python
+│   ├── main.py                   # Ponto de entrada da aplicação FastAPI
+│   ├── database/                 # Configuração da conexão com banco de dados
+│   │   ├── __init__.py
+│   │   └── conexao.py            # Criação da engine e sessão (SQLite)
+│   ├── models/                   # Modelos SQLModel (tabelas do banco)
+│   │   ├── __init__.py
+│   │   └── receita.py            # Modelo Receita (com campos básicos e nutricionais)
+│   ├── schemas/                  # Schemas Pydantic para validação e documentação
+│   │   ├── __init__.py
+│   │   └── receita.py            # Schemas para entrada e saída de dados
+│   ├── routes/                   # Rotas / endpoints da API
+│   │   ├── __init__.py
+│   │   └── receita.py            # CRUD e importação para receitas
+│   ├── etl/        
+│   │   └── importar_receitas.py  # Função para consumir API pública e popular o banco
+│                    
 │
-├── venv/ # Ambiente virtual (não versionado)
-├── receitas.db # Banco de dados SQLite
-├── run.py # Script para criar o banco
-├── requirements.txt # Dependências do projeto
-└── README.md # Documentação do projeto
+│
+├── app_dashboard.py              # Script Streamlit para dashboard visual das receitas
+├── requirements.txt              # Dependências do projeto (FastAPI, SQLModel, httpx etc)
+├── README.md                    # Documentação do projeto (funcionalidades, setup, etc)
+├── .gitignore                   # Arquivos e pastas ignorados pelo git
+└── receitas.db                  # Banco de dados SQLite (gerado automaticamente)
 ```
 
 🚀 Como Rodar o Projeto
