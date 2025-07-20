@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import datetime
 
 
-class Receita(SQLModel, table=True):
+class Receitas(SQLModel, table=True):
     ID: Optional[int] = Field(default=None, primary_key=True)
     Nome: str = Field(index=True)
     Descricao: Optional[str] = Field(default=None, description="Breve descrição da receita")

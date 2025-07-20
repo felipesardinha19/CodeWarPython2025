@@ -7,7 +7,7 @@ from datetime import datetime
 
 from app.etl.importar_receitas import importar_receitas_externas
 from app.database.conexao import engine
-from app.models.receita import Receita  
+from app.models.receita import Receitas  
 
 #----------------------------
 # Cria o roteador para organizar os endpoints relacionados a receitas
@@ -33,20 +33,20 @@ def importar_receitas(session: Session = Depends(get_session)):
 # ---------------------------
 # CRUD: Listar todas as receitas do banco
 # ---------------------------
-@router.get("/", response_model=List[Receita])
+@router.get("/", response_model=List[Receitas])
 def listar_receitas(session: Session = Depends(get_session)):
-    receitas = session.exec(select(Receita)).all()
+    receitas = session.exec(select(Receitas)).all()
     return receitas
 
 # ---------------------------
 # CRUD: Buscar uma receita pelo ID
 # ---------------------------
-@router.get("/{id}", response_model=Receita)
+@router.get("/{id}", response_model=Receitas)
 def buscar_receita(id: int, session: Session = Depends(get_session)):
     """
     Retorna uma receita específica com base no ID.
     """
-    receita = session.get(Receita, id)
+    receita = session.get(Receitas, id)
     if not receita:
         raise HTTPException(status_code=404, detail="Receita não encontrada")
     return receita
@@ -59,7 +59,7 @@ def criar_receita(receita: ReceitaCreate, session: Session = Depends(get_session
     """
     Cadastra uma nova receita manualmente.
     """
-    nova_receita = Receita(
+    nova_receita = Receitas(
         Nome = receita.Nome,
         Descricao = receita.Descricao,
         Ingredientes = receita.Ingredientes,
@@ -76,14 +76,14 @@ def criar_receita(receita: ReceitaCreate, session: Session = Depends(get_session
 # ---------------------------
 # CRUD: Atualizar uma receita existente
 # ---------------------------
-@router.put("/{id}", response_model=Receita)
+@router.put("/{id}", response_model=Receitas)
 def atualizar_receita(
-    id: int, receita_atualizada: Receita, session: Session = Depends(get_session)
+    id: int, receita_atualizada: Receitas, session: Session = Depends(get_session)
 ):
     """
     Atualiza os dados de uma receita com base no ID.
     """
-    receita = session.get(Receita, id)
+    receita = session.get(Receitas, id)
     if not receita:
         raise HTTPException(status_code=404, detail="Receita não encontrada")
 
@@ -109,7 +109,7 @@ def deletar_receita(id: int, session: Session = Depends(get_session)):
     """
     Marca a receita como excluída (sem apagar do banco).
     """
-    receita = session.get(Receita, id)
+    receita = session.get(Receitas, id)
     if not receita:
         raise HTTPException(status_code=404, detail="Receita não encontrada")
 
