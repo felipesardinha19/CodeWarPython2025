@@ -27,8 +27,8 @@ def get_session():
 # ---------------------------
 @router.post("/importar")
 def importar_receitas(session: Session = Depends(get_session)):
-    qtd = importar_receitas_externas(session)
-    return {"message": f"{qtd} receitas importadas com sucesso!"}
+    resultado = importar_receitas_externas(session)
+    return resultado
 
 # ---------------------------
 # CRUD: Listar todas as receitas do banco

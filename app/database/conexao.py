@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, create_engine
+import os
 
 # Configuração do banco de dados SQLite
 DATABASE_URL = "sqlite:///./database.db"
