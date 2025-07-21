@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 st.set_page_config(page_title="Cadê Meu Prato?", layout="wide")
 st.title("Dashboard - Receitas cadastradas")
 
-caminho_banco = "app/database/conexao.py"
+caminho_banco = "sqlite:///./database.db"
 engine = create_engine(f'sqlite:///{caminho_banco}')
 
 def carregar_dados():
