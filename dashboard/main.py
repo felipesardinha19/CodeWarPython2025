@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
+from pathlib import Path
 
 st.set_page_config(page_title="Cadê Meu Prato?", layout="wide")
 st.title("Dashboard - Receitas cadastradas")
 
-caminho_banco = "sqlite:///./database.db"
+caminho_banco = Path(__file__).resolve().parent.parent/"database.db"
 engine = create_engine(f'sqlite:///{caminho_banco}')
 
 def carregar_dados():
@@ -15,5 +16,5 @@ def carregar_dados():
 df = carregar_dados()
 
 st.subheader("Estatisticas")
-st.write("Total de receirtas:", len(df))
+st.write("Total de receitas:", len(df))
 
