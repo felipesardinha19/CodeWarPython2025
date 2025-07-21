@@ -8,6 +8,3 @@ engine = create_engine(
     DATABASE_URL,
     connect_args={"check_same_thread": False}
 )
-
-# (Opcional) Criação automática das tabelas ao importar o módulo
-SQLModel.metadata.create_all(engine)

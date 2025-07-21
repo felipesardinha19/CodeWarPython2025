@@ -2,7 +2,7 @@ import httpx
 import httpx
 from datetime import datetime
 from sqlmodel import Session, select
-from app.models.receita import Receita
+from app.models.receita import Receitas
 
 # ---------------------------
 # importar receitas da API pública (TheMealDB)
@@ -25,7 +25,7 @@ def importar_receitas_externas(session: Session):
                 ingredientes.append(f"{med.strip()} {ing.strip()}")
         ingredientes_str = ", ".join(ingredientes)
 
-        receita = Receita(
+        receita = Receitas(
             Nome=meal["strMeal"],
             Descricao=meal.get("strInstructions"),
             Ingredientes=ingredientes_str,
