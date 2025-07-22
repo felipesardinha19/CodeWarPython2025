@@ -22,5 +22,20 @@ def carregar_dados():
 
 df = carregar_dados()
 
-st.subheader("Estatisticas")
-st.write("Total de receitas:", len(df))
+st.subheader("Estatisticas gerais")
+col1, col2 = st.columns(2)
+with col1:
+    st.metric("Total de receitas", len(df))
+with col2:
+    if 'categoria' in df.columns:
+        st.metric("CAtegorias unicas", df['categoria'].nunique())
+
+st.subheader("Receita do dia")
+if not df.empty:
+    receita = df.sample(1).iloc[0]
+    st.markdown(f"### {receita['Nome']}")
+    if 'Descricao' in df.columns:
+        st.write(receita['Descricao'])
+    if 'ImagemURL' in df.columns:
+        st.image(receita['ImagemURL'], width=400)
+
