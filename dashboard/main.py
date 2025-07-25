@@ -55,15 +55,16 @@ with filtro_col1:
     if 'Categoria' in df.columns:
         categorias = df['Categoria'].dropna().unique()
         categoria_selecionada = st.selectbox("Filtrar por categoria", options=["Todas"] + list(categorias))
+    df_filtrado = df.copy()
     if categoria_selecionada != "Todas":
-        df = df[df['Categoria'] == categoria_selecionada]
+        df_filtrado = df_filtrado[df_filtrado['Categoria'] == categoria_selecionada]
 with filtro_col2:
-    busca = st.text_input("Buscar por nome de receita:")
+    busca = st.text_input("🔎Buscar por nome de receita:")
     if busca:
-        df = df[df['Nome'].str.contains(busca, case=False)]
+        df_filtrado = df_filtrado[df_filtrado['Nome'].str.contains(busca, case=False)]
 
 #Exibição da tabela filtrada
-st.dataframe(df)
+st.dataframe(df_filtrado, use_container_width=True)
 
 #grafico por categoria
 st.markdown("---")
