@@ -16,6 +16,7 @@ db_path = os.path.abspath(os.path.join(base_dir, "..", "database.db"))
 
 engine = create_engine(f'sqlite:///{db_path}', connect_args={"check_same_thread": False})
 
+@st.cache_data
 def carregar_dados():
     query = "SELECT * FROM receitas"
     df = pd.read_sql(query, engine)
@@ -84,3 +85,6 @@ if 'Origem' in df.columns:
     area_df.columns = ['Origem', 'Total']
     fig_area = px.pie(area_df, names='Origem', values='Total', title='Distribuição por Área')
     st.plotly_chart(fig_area, use_container_width=True)
+
+st.markdown("---")
+st.markdown("<small style= 'color:grey;'>Desenvolvido para o desafio CodeWar Python 2025</small>",unsafe_allow_html=True)
