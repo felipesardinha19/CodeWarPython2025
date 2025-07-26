@@ -20,8 +20,6 @@ engine = create_engine(f'sqlite:///{db_path}', connect_args={"check_same_thread"
 def carregar_dados():
     query = "SELECT * FROM receitas"
     df = pd.read_sql(query, engine)
-    print(f'Tabela carregada:{df.shape[0]} registros')
-    print(df.head())
     return df
 
 df = carregar_dados()
