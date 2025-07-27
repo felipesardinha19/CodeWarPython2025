@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from sqlmodel import SQLModel
-
 from app.database.conexao import engine
 from app.routes.receita import router as receita_router
 

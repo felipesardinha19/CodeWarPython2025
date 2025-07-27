@@ -6,21 +6,6 @@ import os
 import random
 import plotly.express as px
 
-st.markdown(
-    """
-    <style>
-    body, .css-18e3th9 {
-        background-color: #d0f0fd;  /* azul clarinho */
-        color: #333333;              /* texto escuro para contraste */
-    }
-    .stApp {
-        background-color: #d0f0fd;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # CONFIGURAÇÃO DA PÁGINA
 st.set_page_config(page_title="Cadê Meu Prato?", layout="wide")
 st.markdown("<h1 style='text-align: center; color: #ff6347;'>🍽️ Cadê Meu Prato?</h1>", unsafe_allow_html=True)
