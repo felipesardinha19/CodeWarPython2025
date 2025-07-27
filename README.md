@@ -102,6 +102,10 @@ Acesse no navegador:
 ```
 http://localhost:8000/docs
 ```
+Acesse a pagina com Streamlit
+```
+streamlit run dashboard\main.py
+```
 ```text
 🔧 Endpoints Principais
 Método	Rota	Descrição
