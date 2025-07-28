@@ -1,10 +1,9 @@
 import httpx
 from app.schemas.receita import ReceitaCreate, ReceitaRead
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel import Session, select
 from typing import List
 from datetime import datetime
-
 from app.etl.importar_receitas import importar_receitas_externas
 from app.database.conexao import engine
 from app.models.receita import Receitas  
@@ -54,7 +53,7 @@ def buscar_receita(id: int, session: Session = Depends(get_session)):
 # ---------------------------
 # CRUD: Criar uma nova receita manualmente
 # ---------------------------
-@router.post("/", response_model=ReceitaRead)
+@router.post("/", response_model=ReceitaRead, status_code=status.HTTP_201_CREATED)
 def criar_receita(receita: ReceitaCreate, session: Session = Depends(get_session)):
     """
     Cadastra uma nova receita manualmente.

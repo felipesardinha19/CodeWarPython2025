@@ -1,10 +1,13 @@
 import streamlit as st
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from pathlib import Path
 import os
 import random
 import plotly.express as px
+import requests
+
+API_URL = "http://localhost:8000"
 
 # CONFIGURAÇÃO DA PÁGINA
 st.set_page_config(page_title="Cadê Meu Prato?", layout="wide")
@@ -45,6 +48,65 @@ if not df.empty:
     if 'ImagemURL' in df.columns:
         st.image(receita['ImagemURL'], width=400)
 
+st.markdown("---")
+# --- FORMULÁRIO PARA CRIAR RECEITA ---
+st.subheader("Cadastrar nova receita")
+
+with st.form("form_receita"):
+    Nome = st.text_input("Nome da receita")
+    Ingredientes = st.text_area("Ingredientes (separados por vírgula)")
+    TempoPreparo = st.number_input("Tempo de preparo (minutos)", min_value=1, step=1)
+    Categoria = st.text_input("Categoria")
+    Descricao = st.text_area("Descrição")
+    Origem = st.text_input("Origem da receita")
+    Imagem_url = st.text_input("URL da imagem")
+
+
+    submitted = st.form_submit_button("Criar Receita")
+
+    if submitted:
+        data = {
+            "Nome": Nome,
+            "Ingredientes": Ingredientes,
+            "Tempo_preparo": TempoPreparo,
+            "Descrição": Descricao,
+            "Origem": Origem,
+            "Categoria": Categoria
+        }
+        response = requests.post(f"{API_URL}/receitas/", json=data)
+
+        if response.status_code == 201:
+            st.success("Receita criada com sucesso!")
+            st.session_state["nome_receita"] = ""
+            st.session_state["ingredientes"] = ""
+            st.session_state["tempo_preparo"] = 0
+            st.session_state["categoria"] = ""
+            st.session_state["descricao"] = ""
+            st.session_state["origem"] = ""
+            st.session_state["imagem"] = ""
+        else:
+            st.error(f"Erro ao criar receita: {response.status_code}")
+
+st.markdown("---")
+st.subheader("Deletar Receita")
+with engine.connect() as conn:
+    result = conn.execute(text("SELECT id, nome FROM receitas"))
+    receitas = result.fetchall()
+    # Exibe o selectbox se houver receitas
+    if receitas:
+        receitas_dict = {f"{nome} (ID: {id})": id for id, nome in receitas}
+        selected = st.selectbox("Selecione a receita para deletar", list(receitas_dict.keys()))
+
+        if st.button("Deletar Receita"):
+            id_para_deletar = receitas_dict[selected]
+            with engine.begin() as conn:
+                conn.execute(text("DELETE FROM Receitas WHERE id = :id"), {"id": id_para_deletar})
+            st.success(f"Receita com ID {id_para_deletar} deletada com sucesso!")
+            st.rerun()  # Atualiza a tela
+    else:
+        st.info("Nenhuma receita cadastrada para deletar.")            
+
+st.markdown("---")
 #Filtro por categoria
 filtro_col1, filtro_col2 = st.columns(2)
 
