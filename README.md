@@ -60,7 +60,7 @@ CadeMeuPrato/
 │                    
 │
 │
-├── app_dashboard.py              # Script Streamlit para dashboard visual das receitas
+├── dashboard.py              # Script Streamlit para dashboard visual das receitas
 ├── requirements.txt              # Dependências do projeto (FastAPI, SQLModel, httpx etc)
 ├── README.md                    # Documentação do projeto (funcionalidades, setup, etc)
 ├── .gitignore                   # Arquivos e pastas ignorados pelo git
@@ -101,6 +101,10 @@ Acesse no navegador:
 
 ```
 http://localhost:8000/docs
+```
+Acesse a pagina com Streamlit
+```
+streamlit run dashboard\main.py
 ```
 ```text
 🔧 Endpoints Principais
